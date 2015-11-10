@@ -17,8 +17,10 @@ except ConnectionError:
     logger.error('Could not connect to Elasticsearch, expect errors.')
     raise
 
+app = Celery('elastic_search', broker='amqp://localhost')
 
-def get_records(table_name, suffix='.txt', echo):
+
+def get_records(table_name, echo, suffix='.txt'):
     size = 0
     with open(''.join([settings.MAG_PATH, table_name, suffix]), 'r') as f:
         for line in f:
@@ -66,7 +68,6 @@ def actions(action, table_name, echo):
 
 def bulk_process(table_name, method, action='update', echo=False):
     if method == 'celery':
-        app = Celery('elastic_search', broker='amqp://localhost')
         for acts in actions_wrapper(action, table_name, echo):
             async_bulk_wrapper.delay(acts)
     elif method == 'parallel':

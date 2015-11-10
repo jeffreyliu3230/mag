@@ -3,7 +3,7 @@ import sys
 
 ELASTIC_TIMEOUT = 10
 ELASTIC_URI = 'localhost:9201'
-MAG_PATH = '/Volumes/Seagate/MicrosoftAcademicGraph/'
+MAG_PATH = '/Users/jliu3230/mag/'
 ELASTIC_INDEX = "mag"
 FIELD_NAMES = {
     'Affiliations': ('affiliation_id',
